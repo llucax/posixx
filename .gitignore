@@ -1,0 +1,6 @@
+*.o
+test/.deps
+test/include
+test/test_suite
+doc/reference
+doc/include
