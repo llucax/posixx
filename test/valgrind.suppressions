@@ -1,5 +1,11 @@
 
 # Suppressions for boost 1.35
+#
+# The easiest way to add a suppression is to use --gen-suppressions=[yes|all]
+# valgrind argument to let valgrind print the suppression string by itself.
+#
+# For more information about suppressions, you can check the valgrind manual:
+# http://valgrind.org/docs/manual/manual-core.html#manual-core.suppress
 
 {
    boost_test_1
