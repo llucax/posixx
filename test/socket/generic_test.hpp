@@ -233,6 +233,7 @@ BOOST_AUTO_TEST_CASE( dgram_sendto_recvfrom_struct_test )
 	s2.bind(test_address2);
 	// socket 1 send
 	data d;
+	memset(&d, 0, sizeof(data));
 	strcpy(d.msg, "hello world!");
 	d.number = -32495813;
 	s1.send_struct(d, test_address2);
