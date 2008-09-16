@@ -36,9 +36,9 @@ endif
 ifneq ($(V), 1)
 NICE_CXX = @echo "  CXX $@"; $(CXX)
 NICE_LINK = @echo "  LINK $@"; $(CXX)
-NICE_TEST = @echo "  TEST"; $(TESTCMD) > /dev/null 2>&1
+NICE_TEST = @echo "  TEST"; $(TESTCMD) > test_suite.log 2>&1
 NICE_MEMTEST = @echo "  MEMTEST"; $(VALGRIND) --log-file=valgrind.log \
-		$(TESTCMD) > /dev/null 2>&1
+		$(TESTCMD) > valgrind.test_suite.log 2>&1
 NICE_CLEAN = @echo "  CLEAN"; $(RM)
 else
 NICE_CXX = $(CXX)
