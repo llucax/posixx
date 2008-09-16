@@ -10,7 +10,7 @@ TESTCMD = ./$(TESTPRG) --detect_memory_leak=1 --report_level=short \
 
 VALGRIND = valgrind --tool=memcheck --leak-check=yes --db-attach=no \
 		--num-callers=24 --leak-resolution=high --track-fds=yes \
-		--suppressions=valgrind.suppressions
+		--suppressions=valgrind.suppressions --error-exitcode=1
 
 
 SOURCES = $(shell find -name '*.cpp')
