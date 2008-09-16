@@ -2,5 +2,8 @@
 test/.deps
 test/include
 test/test_suite
+test/test_suite.log
+test/valgrind.log
+test/valgrind.test_suite.log
 doc/reference
 doc/include
