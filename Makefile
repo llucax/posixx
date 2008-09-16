@@ -15,7 +15,7 @@ install:
 doc:
 	$(MAKE) -C doc $@
 
-test memtest: all
+test memtest:
 	$(MAKE) -C test $@
 
 clean:
