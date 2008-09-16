@@ -7,7 +7,7 @@ prefix=/usr/local
 
 default: all
 
-all: test memtest
+all: doc test memtest
 
 install:
 	$(MAKE) -C src $@
