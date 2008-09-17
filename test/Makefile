@@ -69,7 +69,8 @@ all: test_suite
 	@mkdir -p $(dir $@)
 	@set -e; rm -f $@; \
 		$(CC) -MM -MG -MP $(CPPFLAGS) $(ALL_CFLAGS) $< -MF $@.$$$$; \
-		sed 's,\($(notdir $*)\)\.o[ :]*,$(dir $<)\1.o $@ : ,g' < $@.$$$$ > $@; \
+		sed 's,\($(notdir $*)\)\.o[ :]*,$(dir $<)\1.o $@ : ,g' \
+				< $@.$$$$ > $@; \
 		rm -f $@.$$$$
 
 ifneq ($(MAKECMDGOALS),clean)
