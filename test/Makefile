@@ -1,7 +1,6 @@
 
-CINCPATH = -isystem include
-CFLAGS += -std=c++98 -Wall -pedantic
-LDFLAGS = -lboost_unit_test_framework
+LOCAL_CFLAGS = -std=c++98 -Wall -pedantic -isystem include
+LOCAL_LDFLAGS = -lboost_unit_test_framework
 
 TESTPRG = test_suite
 TESTCMD = ./$(TESTPRG) --detect_memory_leak=1 --report_level=short \
@@ -18,7 +17,8 @@ OBJS = $(SOURCES:.cpp=.o)
 
 
 
-ALL_CFLAGS = $(CFLAGS) $(CINCPATH)
+ALL_CFLAGS = $(LOCAL_CFLAGS) $(LI_CFLAGS) $(CFLAGS)
+ALL_LDFLAGS = $(LOCAL_LDFLAGS) $(LI_LDFLAGS) $(LDFLAGS)
 
 ifdef RELEASE
 ALL_CFLAGS += -O3 -NDEBUG
@@ -82,7 +82,7 @@ endif
 
 
 $(TESTPRG): $(OBJS)
-	$(NICE_LINK) $(ALL_CFLAGS) $(LDFLAGS) -o $@ $^
+	$(NICE_LINK) $(ALL_LDFLAGS) -o $@ $^
 
 $(OBJS): include
 
