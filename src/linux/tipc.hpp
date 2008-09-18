@@ -275,7 +275,7 @@ struct sockaddr: sockaddr_tipc
 	{
 		ID = TIPC_ADDR_ID, ///< Port ID
 		NAME = TIPC_ADDR_NAME, ///< Port name
-		NAMESEQ = TIPC_ADDR_NAMESEQ, ///< Name sequence or multicast
+		NAMESEQ = TIPC_ADDR_NAMESEQ ///< Name sequence or multicast
 	};
 
 	/**
