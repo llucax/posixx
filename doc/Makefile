@@ -27,13 +27,13 @@ install: install-man install-html
 install-man: doc
 	$(NICE) for f in `find reference/man -type f | cut -b11-`; do \
 		echo "  INSTALL $(prefix)/share/$$f"; \
-		install -m 0644 -D reference/$$f $(prefix)/share/$$f; \
+		install -p -m 0644 -D reference/$$f $(prefix)/share/$$f; \
 	done
 
 install-html: doc
 	$(NICE) for f in `find reference/html -type f | cut -b11-`; do \
 		echo "  INSTALL $(prefix)/share/doc/posixx/$$f"; \
-		install -m 0644 -D reference/$$f $(prefix)/share/doc/posixx/$$f; \
+		install -p -m 0644 -D reference/$$f $(prefix)/share/doc/posixx/$$f; \
 	done
 
 include:

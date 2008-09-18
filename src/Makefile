@@ -23,7 +23,7 @@ all:
 install-headers: $(HEADERS)
 	$(NICE) for f in $(HEADERS); do \
 		echo "  INSTALL $(prefix)/include/$(HDRPATH)/$$f"; \
-		install -m 0644 -D $$f $(prefix)/include/$(HDRPATH)/$$f; \
+		install -p -m 0644 -D $$f $(prefix)/include/$(HDRPATH)/$$f; \
 	done
 
 install: install-headers
