@@ -36,9 +36,9 @@ endif
 ifneq ($(V), 1)
 NICE_CXX = @echo "  CXX $@"; $(CXX)
 NICE_LINK = @echo "  LINK $@"; $(CXX)
-NICE_TEST = @echo "  TEST"; $(TESTCMD) > test_suite.log 2>&1
+NICE_TEST = @echo "  TEST"; $(TESTCMD) > $(TESTPRG).log 2>&1
 NICE_MEMTEST = @echo "  MEMTEST"; $(VALGRIND) --log-file=valgrind.log \
-		$(TESTCMD) > valgrind.test_suite.log 2>&1
+		$(TESTCMD) > valgrind.$(TESTPRG).log 2>&1
 NICE_CLEAN = @echo "  CLEAN"; $(RM)
 else
 NICE_CXX = $(CXX)
@@ -51,7 +51,7 @@ endif
 
 default: all
 
-all: test_suite
+all: $(TESTPRG)
 
 
 # dependency handling
@@ -93,16 +93,22 @@ include:
 	@mkdir -p include
 	@ln -fs ../../src include/posixx
 
-test: all
-	$(NICE_TEST)
+test: .test-stamp
 
-memtest: all
+.test-stamp: $(TESTPRG)
+	$(NICE_TEST)
+	@touch $@
+
+memtest: .memtest-stamp
+
+.memtest-stamp: $(TESTPRG)
 	$(NICE_MEMTEST)
+	@touch $@
 
 clean:
 	$(NICE_CLEAN) -r $(TESTPRG) include $(OBJS) .deps valgrind.log \
-		*.bb *.bbg *.da *.gcov *.gcda *.gcno gmon.out
+		*.bb *.bbg *.da *.gcov *.gcda *.gcno gmon.out .*-stamp
 
-.PHONY: default all test clean
+.PHONY: default all test memtest clean
 
 
