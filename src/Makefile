@@ -6,6 +6,10 @@ HEADERS = $(shell find -name '*.hpp' | cut -b3-)
 HDRPATH = posixx
 
 
+# prefix for installing the binaries
+prefix = /usr/local
+
+
 # install command
 INSTALL = install -p -m 0644 -D
 
