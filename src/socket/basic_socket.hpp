@@ -1,8 +1,8 @@
-#ifndef POSIXX_BASIC_SOCKET_HPP_
-#define POSIXX_BASIC_SOCKET_HPP_
+#ifndef POSIXX_SOCKET_BASIC_SOCKET_HPP_
+#define POSIXX_SOCKET_BASIC_SOCKET_HPP_
 
-#include "error.hpp" // posixx::error
-#include "static_assert.hpp" // static_assert
+#include "../error.hpp" // posixx::error
+#include "../static_assert.hpp" // static_assert
 
 #include <string> // std::string
 #include <utility> // std::pair
@@ -863,4 +863,4 @@ void recv(std::string& buf, size_t n)
 }
 #endif
 
-#endif // _POSIXX_BASIC_SOCKET_HPP_
+#endif // _POSIXX_SOCKET_BASIC_SOCKET_HPP_

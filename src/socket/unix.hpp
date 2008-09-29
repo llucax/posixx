@@ -1,7 +1,7 @@
 #ifndef POSIXX_SOCKET_UNIX_HPP_
 #define POSIXX_SOCKET_UNIX_HPP_
 
-#include "../basic_socket.hpp" // posixx::socket
+#include "basic_socket.hpp" // posixx::socket
 
 #include <sys/un.h> // sockaddr_un
 #include <string> // std::string

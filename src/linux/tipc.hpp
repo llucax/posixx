@@ -1,7 +1,7 @@
 #ifndef POSIXX_LINUX_TIPC_HPP_
 #define POSIXX_LINUX_TIPC_HPP_
 
-#include "../basic_socket.hpp" // posixx::socket
+#include "../socket/basic_socket.hpp" // posixx::socket
 
 #include <linux/tipc.h> // all tipc stuff
 #include <cstring> // memcpy

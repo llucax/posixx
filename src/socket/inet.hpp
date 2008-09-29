@@ -1,7 +1,7 @@
 #ifndef POSIXX_SOCKET_INET_HPP_
 #define POSIXX_SOCKET_INET_HPP_
 
-#include "../basic_socket.hpp" // posixx::socket
+#include "basic_socket.hpp" // posixx::socket
 
 #include <netinet/in.h> // sockaddr_in, htonl, htons, {PF,AF}_INET, INADDR_ANY
 #include <arpa/inet.h> // inet_addr

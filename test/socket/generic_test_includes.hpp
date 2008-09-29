@@ -7,6 +7,6 @@
 #include <fcntl.h>
 #include <cstring>
 #include <string>
-#include <posixx/basic_socket.hpp>
+#include <posixx/socket/basic_socket.hpp>
 #include <posixx/socket/opt.hpp>
 
