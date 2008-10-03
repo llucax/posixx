@@ -1,5 +1,5 @@
 
-LOCAL_CFLAGS = -std=c++98 -Wall -pedantic -isystem include
+LOCAL_CFLAGS = -std=c++98 -Wall -pedantic -Iinclude
 LOCAL_LDFLAGS = -lboost_unit_test_framework
 
 TESTPRG = test_suite
