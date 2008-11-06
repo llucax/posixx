@@ -4,8 +4,8 @@ LOCAL_LDFLAGS = -lboost_unit_test_framework
 
 TESTPRG = test_suite
 TESTCMD = ./$(TESTPRG) --detect_memory_leak=1 --report_level=short \
-#		--build_info=yes --log_level=test_suite \
-#		| grep -v "Entering test case " | grep -v "Leaving test case"
+		#--build_info=yes --log_level=test_suite \
+		#| grep -v "Entering test case " | grep -v "Leaving test case"
 
 VALGRIND = valgrind --tool=memcheck --leak-check=yes --db-attach=no \
 		--num-callers=24 --leak-resolution=high --track-fds=yes \

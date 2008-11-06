@@ -37,13 +37,13 @@ struct error: std::runtime_error
 
 inline
 posixx::error::error() throw():
-    std::runtime_error(strerror(errno)), no(errno)
+		std::runtime_error(strerror(errno)), no(errno)
 {
 }
 
 inline
 posixx::error::error(const std::string& where) throw ():
-    std::runtime_error(where + ": " + strerror(errno)), no(errno)
+		std::runtime_error(where + ": " + strerror(errno)), no(errno)
 {
 }
 

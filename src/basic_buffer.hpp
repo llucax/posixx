@@ -403,7 +403,7 @@ struct basic_buffer {
 	}
 
 	/**
- 	 * Efficiently swaps the contents of x and y.
+	 * Efficiently swaps the contents of x and y.
 	 *
 	 * Invalidates all references and iterators.
 	 */

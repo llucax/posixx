@@ -600,30 +600,30 @@ ssize_t posixx::socket::basic_socket< TSockTraits >::recv(void* buf, size_t n,
 }
 
 /*
-   template< typename TSockTraits >
-   inline
-   ssize_t posixx::socket::basic_socket< TSockTraits >::send(const msghdr* msg, int flags)
-   {
-   ssize_t s = ::sendmsg(_fd, msg, flags);
-   if (s == -1)
-   throw error("sendmsg");
-   if (s == 0)
-   throw error("send");
-   return s;
-   }
+template< typename TSockTraits >
+inline
+ssize_t posixx::socket::basic_socket< TSockTraits >::send(const msghdr* msg, int flags)
+{
+	ssize_t s = ::sendmsg(_fd, msg, flags);
+	if (s == -1)
+		throw error("sendmsg");
+	if (s == 0)
+		throw error("send");
+	return s;
+}
 
-   template< typename TSockTraits >
-   inline
-   ssize_t posixx::socket::basic_socket< TSockTraits >::recv(struct msghdr* msg, int flags)
-   {
-   ssize_t s = ::recvmsg(_fd, msg, flags);
-   if (s == -1)
-   throw error("recvmsg");
-   if (s == 0)
-   throw error("send");
-   return s;
-   }
- */
+template< typename TSockTraits >
+inline
+ssize_t posixx::socket::basic_socket< TSockTraits >::recv(struct msghdr* msg, int flags)
+{
+	ssize_t s = ::recvmsg(_fd, msg, flags);
+	if (s == -1)
+		throw error("recvmsg");
+	if (s == 0)
+		throw error("send");
+	return s;
+}
+*/
 
 template< typename TSockTraits >
 template< typename TSockOpt >
