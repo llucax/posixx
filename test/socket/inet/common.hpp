@@ -2,21 +2,13 @@
 #define TEST_SOCKET_IP_COMMON_HPP_
 
 #include <posixx/socket/inet.hpp> // posixx::socket::inet
+#include <posixx/socket/inet/print.hpp> // address ostream formatting
 #include <posixx/socket/opt.hpp> // posixx::socket::opt::REUSEADDR
 #include <ostream> // std::ostream
 
 #define IP "127.0.0.1"
 #define PORT1 10001
 #define PORT2 10002
-
-static inline
-std::ostream& operator << (std::ostream& os,
-		const posixx::socket::inet::sockaddr& sa) throw()
-{
-	return os << "inet::sockaddr(family=" << sa.sin_family
-		<< ", port=" << ntohs(sa.sin_port)
-		<< ", addr=" << inet_ntoa(sa.sin_addr) << ")";
-}
 
 static inline
 void clean_test_address(posixx::socket::inet::socket& socket,

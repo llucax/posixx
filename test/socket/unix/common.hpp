@@ -2,6 +2,7 @@
 #define TEST_SOCKET_UNIX_COMMON_HPP_
 
 #include <posixx/socket/unix.hpp> // posixx::socket::unix
+#include <posixx/socket/unix/print.hpp> // address ostream formatting
 #include <boost/test/unit_test.hpp> // unit testing stuff
 #include <ostream> // std::ostream
 #include <unistd.h> // unlink
@@ -10,14 +11,6 @@
 #define PATH "/tmp/posixx_socket_unix_test"
 #define PATH1 PATH "1"
 #define PATH2 PATH "2"
-
-static inline
-std::ostream& operator << (std::ostream& os,
-		const posixx::socket::unix::sockaddr& sa) throw()
-{
-	return os << "unix::sockaddr(family=" << sa.sun_family
-		<< ", path=" << sa.sun_path << ")";
-}
 
 static inline
 void clean_test_address(posixx::socket::unix::socket& socket,
