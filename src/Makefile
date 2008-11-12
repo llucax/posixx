@@ -1,13 +1,35 @@
 
+# Build flags (include general stuff in the .pc file instead)
+LOCAL_CFLAGS =
+LOCAL_LDFLAGS =
+
 # XXX: The cut pipe is to strip the leading "./" from find results. It's
 #      a little ugly but I couldn't find a better way to get a list of all
 #      headers in the directory (recursively).
 HEADERS = $(shell find -name '*.hpp' | cut -b3-)
 HDRPATH = posixx
-
+PCFILE = posixx.pc
+PCTEMPLATE = $(PCFILE).template
 
 # prefix for installing the binaries
 prefix = /usr/local
+
+
+# Flags fetched from pkg-config .pc file
+ifneq ($(PCTEMPLATE), )
+PKG_LIB = $(shell grep Libs.private: $(PCTEMPLATE) | cut -d' ' -f2-)
+PKG_REQ = $(shell grep Requires: $(PCTEMPLATE) | cut -d' ' -f2-)
+ifneq ($(PKG_REQ), )
+PKG_REQ_CFLAGS = $(shell pkg-config --cflags $(PKG_REQ))
+PKG_REQ_LDFLAGS = $(shell pkg-config --libs $(PKG_REQ))
+endif
+endif
+
+# XXX: LI_* variables are for internal use only
+# (for the super-repository local-install target)
+ALL_CFLAGS = $(LOCAL_CFLAGS) $(PKG_REQ_CFLAGS) $(LI_CFLAGS) $(CFLAGS)
+ALL_LDFLAGS = $(LOCAL_LDFLAGS) $(PKG_LIB) $(PKG_REQ_LDFLAGS) $(LI_LDFLAGS) \
+		$(LDFLAGS)
 
 
 # install command
@@ -36,15 +58,23 @@ default: all
 
 all:
 
-install: install-headers
+$(PCFILE): $(PCTEMPLATE)
+	@sed 's|PREFIX|$(prefix)|' $< > $@
+
+install: install-headers install-pc
 
 install-headers: .install-headers-stamp
 
 .install-headers-stamp: $(HEADERS)
 	$(call install_files,$^,$(prefix)/include/$(HDRPATH))
 
-clean:
-	$(NICE_CLEAN) .*-stamp
+install-pc: .install-pc-stamp
 
-.PHONY: default all install install-headers clean
+.install-pc-stamp: $(PCFILE)
+	$(call install_files,$^,$(prefix)/lib/pkgconfig)
+
+clean:
+	$(NICE_CLEAN) $(PCFILE) .*-stamp
+
+.PHONY: default all install install-headers install-pc clean
 
