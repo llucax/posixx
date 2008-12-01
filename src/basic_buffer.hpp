@@ -6,6 +6,7 @@
 #include <tr1/type_traits> // std::tr1::is_integral, true_type, false_type
 #include <cstring> // std::memcpy(), memset(), memcmp()
 #include <cassert> // assert()
+#include <cstddef> // std::size_t, ptrdiff_t
 
 namespace posixx {
 
@@ -41,10 +42,10 @@ struct basic_buffer {
 	typedef const value_type* const_iterator;
 
 	///
-	typedef size_t size_type;
+	typedef std::size_t size_type;
 
 	///
-	typedef ptrdiff_t difference_type;
+	typedef std::ptrdiff_t difference_type;
 
 	///
 	typedef value_type* pointer;
@@ -434,10 +435,10 @@ protected:
 	pointer _data;
 
 	// Size in number of items
-	size_t _size;
+	std::size_t _size;
 
 	// Allocator wrapper for automatic casting
-	static pointer _allocate(void* ptr, size_t sz)
+	static pointer _allocate(void* ptr, std::size_t sz)
 	{
 		if (ptr == NULL && sz == 0)
 			return NULL;
@@ -485,8 +486,9 @@ protected:
 /**
  * Returns true if x hass the same contents as y.
  */
-template < void* (*Allocator)(void*, size_t) >
-bool operator == (const basic_buffer< Allocator >& x, const basic_buffer < Allocator >& y)
+template < void* (*Allocator)(void*, std::size_t) >
+bool operator == (const basic_buffer< Allocator >& x,
+		const basic_buffer < Allocator >& y)
 {
 	if (&x == &y)
 		return true;
@@ -506,8 +508,9 @@ bool operator == (const basic_buffer< Allocator >& x, const basic_buffer < Alloc
 /**
  * Returns !(x==y).
  */
-template < void* (*Allocator)(void*, size_t) >
-bool operator != (const basic_buffer<Allocator>& x, const basic_buffer <Allocator>& y)
+template < void* (*Allocator)(void*, std::size_t) >
+bool operator != (const basic_buffer<Allocator>& x,
+		const basic_buffer <Allocator>& y)
 {
 	return !(x == y);
 }
@@ -516,8 +519,9 @@ bool operator != (const basic_buffer<Allocator>& x, const basic_buffer <Allocato
  * Returns true if the elements contained in x are lexicographically less than
  * the elements contained in y.
  */
-template < void* (*Allocator)(void*, size_t) >
-bool operator < (const basic_buffer< Allocator >& x, const basic_buffer< Allocator >& y)
+template < void* (*Allocator)(void*, std::size_t) >
+bool operator < (const basic_buffer< Allocator >& x,
+		const basic_buffer< Allocator >& y)
 {
 	if (&x == &y)
 		return false;
@@ -537,8 +541,9 @@ bool operator < (const basic_buffer< Allocator >& x, const basic_buffer< Allocat
 /**
  * Returns y < x.
  */
-template < void* (*Allocator)(void*, size_t) >
-bool operator > (const basic_buffer< Allocator >& x, const basic_buffer< Allocator >& y)
+template < void* (*Allocator)(void*, std::size_t) >
+bool operator > (const basic_buffer< Allocator >& x,
+		const basic_buffer< Allocator >& y)
 {
 	return y < x;
 }
@@ -546,8 +551,9 @@ bool operator > (const basic_buffer< Allocator >& x, const basic_buffer< Allocat
 /**
  * Returns !(y < x).
  */
-template < void* (*Allocator)(void*, size_t) >
-bool operator <= (const basic_buffer< Allocator >& x, const basic_buffer< Allocator >& y)
+template < void* (*Allocator)(void*, std::size_t) >
+bool operator <= (const basic_buffer< Allocator >& x,
+		const basic_buffer< Allocator >& y)
 {
 	return !(y < x);
 }
@@ -555,8 +561,9 @@ bool operator <= (const basic_buffer< Allocator >& x, const basic_buffer< Alloca
 /**
  * Returns !(x < y).
  */
-template < void* (*Allocator)(void*, size_t) >
-bool operator >= (const basic_buffer< Allocator >& x, const basic_buffer< Allocator >& y)
+template < void* (*Allocator)(void*, std::size_t) >
+bool operator >= (const basic_buffer< Allocator >& x,
+		const basic_buffer< Allocator >& y)
 {
 	return !(x < y);
 }
@@ -570,7 +577,7 @@ bool operator >= (const basic_buffer< Allocator >& x, const basic_buffer< Alloca
  *
  * Invalidates all references and iterators.
  */
-template < void* (*Allocator)(void*, size_t) >
+template < void* (*Allocator)(void*, std::size_t) >
 void swap(basic_buffer< Allocator >& x, basic_buffer< Allocator >& y)
 {
 	x.swap(y);
