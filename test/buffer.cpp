@@ -23,6 +23,8 @@ std::ostream& operator << (std::ostream& os, const posixx::buffer& b)
 BOOST_TEST_DONT_PRINT_LOG_VALUE( buffer ) // FIXME
 BOOST_TEST_DONT_PRINT_LOG_VALUE( buffer::iterator )
 BOOST_TEST_DONT_PRINT_LOG_VALUE( buffer::const_iterator )
+BOOST_TEST_DONT_PRINT_LOG_VALUE( buffer::reverse_iterator )
+BOOST_TEST_DONT_PRINT_LOG_VALUE( buffer::const_reverse_iterator )
 
 // avoid compilation warning concerning unused variables
 void dummy(buffer::const_iterator i) {}
@@ -239,6 +241,37 @@ BOOST_AUTO_TEST_CASE( iterators_test )
 	*i = 77;
 	BOOST_CHECK_EQUAL(*i, 77);
 	BOOST_CHECK_EQUAL(*(b.begin() + 1), 77);
+}
+
+BOOST_AUTO_TEST_CASE( reverse_iterators_test )
+{
+	buffer::value_type a[] = { 56, 123, 253 };
+	buffer b(a, a + 3);
+	BOOST_CHECK_NE(b.rbegin(), b.rend());
+	BOOST_CHECK_LT(b.rbegin(), b.rend());
+	buffer::reverse_iterator i = b.rbegin();
+	BOOST_CHECK_EQUAL(*i, 253);
+	i++;
+	BOOST_CHECK_EQUAL(*i, 123);
+	++i;
+	BOOST_CHECK_EQUAL(*i, 56);
+	i += 1;
+	BOOST_CHECK_EQUAL(i, b.rend());
+	i--;
+	BOOST_CHECK_EQUAL(*i, 56);
+	--i;
+	BOOST_CHECK_EQUAL(*i, 123);
+	i -= 1;
+	BOOST_CHECK_EQUAL(*i, 253);
+	i++;
+	BOOST_CHECK_EQUAL(*(i + 1), 56);
+	BOOST_CHECK_EQUAL(*(i - 1), 253);
+	BOOST_CHECK_EQUAL(i - 1, b.rbegin());
+	BOOST_CHECK_EQUAL(i + 2, b.rend());
+	BOOST_CHECK_EQUAL(i - b.rbegin(), 1);
+	*i = 77;
+	BOOST_CHECK_EQUAL(*i, 77);
+	BOOST_CHECK_EQUAL(*(b.rbegin() + 1), 77);
 }
 
 BOOST_AUTO_TEST_CASE( resize_test )

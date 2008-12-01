@@ -36,7 +36,7 @@ struct basic_buffer {
 	typedef const value_type& const_reference;
 
 	///
-	typedef value_type* iterator; // TODO: make a real iterator
+	typedef value_type* iterator;
 
 	///
 	typedef const value_type* const_iterator;
@@ -54,12 +54,10 @@ struct basic_buffer {
 	typedef const pointer const_pointer;
 
 	///
-	// TODO: reverse iterator
-	//typedef typename std::reverse_iterator< iterator > reverse_iterator;
+	typedef std::reverse_iterator< iterator > reverse_iterator;
 
 	///
-	//typedef typename std::reverse_iterator< const iterator >
-	//		const_reverse_iterator;
+	typedef std::reverse_iterator< const_iterator > const_reverse_iterator;
 
 
 	// Construct/Copy/Destroy
@@ -179,29 +177,29 @@ struct basic_buffer {
 	 * Returns a random access reverse_iterator that points to the
 	 * past-the-end value.
 	 */
-	//reverse_iterator rbegin()
-	//{ return std::reverse_iterator< iterator >(end()); }
+	reverse_iterator rbegin()
+	{ return reverse_iterator(end()); }
 
 	/**
 	 * Returns a random access const_reverse_iterator that points to the
 	 * past-the-end value.
 	 */
-	//const_reverse_iterator rbegin() const
-	//{ return std::reverse_iterator< const iterator >(end()); }
+	const_reverse_iterator rbegin() const
+	{ return const_reverse_iterator(end()); }
 
 	/**
 	 * Returns a random access reverse_iterator that points to the first
 	 * element.
 	 */
-	//reverse_iterator rend()
-	//{ return std::reverse_iterator< iterator >(begin()); }
+	reverse_iterator rend()
+	{ return reverse_iterator(begin()); }
 
 	/**
 	 * Returns a random access const_reverse_iterator that points to the
 	 * first element.
 	 */
-	//const_reverse_iterator rend() const
-	//{ return std::reverse_iterator< const iterator >(begin()); }
+	const_reverse_iterator rend() const
+	{ return const_reverse_iterator(begin()); }
 
 
 	// Capacity
