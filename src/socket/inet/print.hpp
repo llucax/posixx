@@ -8,8 +8,8 @@ inline
 std::ostream& operator << (std::ostream& os,
 		const posixx::socket::inet::sockaddr& sa) throw()
 {
-	return os << "inet::sockaddr(port=" << ntohs(sa.sin_port)
-			<< ", addr=" << inet_ntoa(sa.sin_addr) << ")";
+	return os << "inet::sockaddr(addr=" << sa.addr()
+			<< ", port=" << sa.port() << ")";
 }
 
 #endif // POSIXX_SOCKET_INET_PRINT_HPP_

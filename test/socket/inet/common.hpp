@@ -18,7 +18,7 @@ void clean_test_address(posixx::socket::inet::socket& socket,
 	socket.opt< posixx::socket::opt::REUSEADDR >(true);
 }
 
-static posixx::socket::inet::sockaddr test_address1(PORT1, IP);
-static posixx::socket::inet::sockaddr test_address2(PORT2, IP);
+static posixx::socket::inet::sockaddr test_address1(IP, PORT1);
+static posixx::socket::inet::sockaddr test_address2(IP, PORT2);
 
 #endif // TEST_SOCKET_IP_COMMON_HPP_
