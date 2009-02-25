@@ -80,3 +80,11 @@
    fun:main
 }
 
+{
+   boost_test_6
+   Memcheck:Addr4
+   fun:_ZN5boost9unit_test14framework_implD1Ev
+   fun:exit
+   fun:(below main)
+}
+
