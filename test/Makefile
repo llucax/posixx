@@ -1,6 +1,6 @@
 
 LOCAL_CFLAGS = -std=c++98 -Wall -pedantic -Iinclude
-LOCAL_LDFLAGS = -lboost_unit_test_framework
+LOCAL_LDFLAGS = -lboost_unit_test_framework-mt
 
 TESTPRG = test_suite
 TESTCMD = ./$(TESTPRG) --detect_memory_leak=1 --report_level=short \
