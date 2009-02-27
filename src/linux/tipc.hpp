@@ -689,7 +689,20 @@ inline
 bool posixx::linux::tipc::sockaddr::operator == (const sockaddr& other) const
 		throw ()
 {
-	return !memcmp(this, &other, sizeof(*this));
+	if (family != other.family)
+		return false;
+	if (addrtype != other.addrtype)
+		return false;
+	if (scope != other.scope)
+		return false;
+	if (addrtype == ID)
+		return port_id() == other.port_id();
+	if (addrtype == NAME)
+		return name_domain() == other.name_domain()
+				&& port_name() == other.port_name();
+	if (addrtype == NAMESEQ)
+		return name_seq() == other.name_seq();
+	return memcmp(this, &other, sizeof(*this)) == 0;
 }
 
 inline
