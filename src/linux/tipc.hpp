@@ -117,7 +117,6 @@ struct name: tipc_name
 /**
  * Port sequence.
  *
- * @see Multicast
  * @see tipc_name_seq struct from linux/tipc.h.
  */
 struct nameseq: tipc_name_seq
@@ -137,34 +136,7 @@ struct nameseq: tipc_name_seq
 	 * @param instance Lower and upper bound.
 	 */
 	nameseq(__u32 type, __u32 instance) throw ();
-};
 
-/**
- * Multicast port sequence.
- *
- * It's a port sequence just like nameseq used to simplify the use of the
- * sockaddr.
- *
- * @see nameseq
- * @see Estructura tipc_name_seq de linux/tipc.h
- */
-struct multicast: tipc_name_seq
-{
-	/**
-	 * Constructor.
-	 *
-	 * @param type Type of the multicast sequence.
-	 * @param lower Lower bound.
-	 * @param upper Upper bound.
-	 */
-	multicast(__u32 type, __u32 lower, __u32 upper) throw ();
-	/**
-	 * Constructor.
-	 *
-	 * @param type Type of the multicast sequence.
-	 * @param instance Lower and upper bound.
-	 */
-	multicast(__u32 type, __u32 instance) throw ();
 };
 
 /**
@@ -322,14 +294,6 @@ struct sockaddr: sockaddr_tipc
 	 */
 	sockaddr(nameseq nameseq, scope_t scope = ZONE) throw ();
 
-	/**
-	 * Constructor using a multicast port name sequence.
-	 *
-	 * @param mcast Multicast port name sequence.
-	 * @param scope Bind scope.
-	 */
-	sockaddr(multicast mcast, scope_t scope = ZONE) throw ();
-
 	/// Type of TIPC address
 	type_t type() const throw ();
 
@@ -449,23 +413,6 @@ posixx::linux::tipc::nameseq::nameseq(__u32 t, __u32 instance) throw ()
 }
 
 inline
-posixx::linux::tipc::multicast::multicast(__u32 t, __u32 low, __u32 up)
-	throw ()
-{
-	type = t;
-	lower = low;
-	upper = up;
-}
-
-inline
-posixx::linux::tipc::multicast::multicast(__u32 t, __u32 instance) throw ()
-{
-	type = t;
-	lower = instance;
-	upper = instance;
-}
-
-inline
 posixx::linux::tipc::subscription::subscription(nameseq s, __u32 t, __u32 f,
 		const char* uh) throw ()
 {
@@ -507,15 +454,6 @@ posixx::linux::tipc::sockaddr::sockaddr(nameseq nameseq, scope_t s) throw ()
 	addrtype = TIPC_ADDR_NAMESEQ;
 	scope = s;
 	addr.nameseq = nameseq;
-}
-
-inline
-posixx::linux::tipc::sockaddr::sockaddr(multicast mcast, scope_t s) throw ()
-{
-	family = AF_TIPC;
-	addrtype = TIPC_ADDR_MCAST;
-	scope = s;
-	addr.nameseq = mcast;
 }
 
 inline
