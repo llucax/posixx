@@ -96,6 +96,9 @@ struct portid: tipc_portid
 	 */
 	portid(__u32 ref, addr node) throw ();
 
+	/// Compares 2 port ids.
+	bool operator == (const portid& other) const throw ();
+
 };
 
 /**
@@ -113,6 +116,9 @@ struct name: tipc_name
 	 * @param instance Instance of the named port.
 	 */
 	name(__u32 type, __u32 instance) throw ();
+
+	/// Compares 2 port names.
+	bool operator == (const name& other) const throw ();
 
 };
 
@@ -140,6 +146,9 @@ struct nameseq: tipc_name_seq
 	 * @param instance Lower and upper bound.
 	 */
 	nameseq(__u32 type, __u32 instance) throw ();
+
+	/// Compares 2 port name sequences.
+	bool operator == (const nameseq& other) const throw ();
 
 };
 
@@ -251,6 +260,9 @@ struct subscr: tipc_subscr
 
 	/// Set the user handle as binary data.
 	void handle(const char* usr_handle, size_t handle_size) throw ();
+
+	/// Compares 2 subscription request messages.
+	bool operator == (const subscr& other) const throw ();
 
 };
 
@@ -440,10 +452,24 @@ posixx::linux::tipc::portid::portid(__u32 r, addr n) throw ()
 }
 
 inline
+bool posixx::linux::tipc::portid::operator == (
+		const posixx::linux::tipc::portid& other) const throw ()
+{
+	return memcmp(this, &other, sizeof(*this)) == 0;
+}
+
+inline
 posixx::linux::tipc::name::name(__u32 t, __u32 i) throw ()
 {
 	type = t;
 	instance = i;
+}
+
+inline
+bool posixx::linux::tipc::name::operator == (
+		const posixx::linux::tipc::name& other) const throw ()
+{
+	return memcmp(this, &other, sizeof(*this)) == 0;
 }
 
 inline
@@ -460,6 +486,13 @@ posixx::linux::tipc::nameseq::nameseq(__u32 t, __u32 instance) throw ()
 	type = t;
 	lower = instance;
 	upper = instance;
+}
+
+inline
+bool posixx::linux::tipc::nameseq::operator == (
+		const posixx::linux::tipc::nameseq& other) const throw ()
+{
+	return memcmp(this, &other, sizeof(*this)) == 0;
 }
 
 inline
@@ -493,6 +526,13 @@ void posixx::linux::tipc::subscr::handle(const char* uh, size_t uh_size)
 		throw ()
 {
 	std::memcpy(usr_handle, uh, uh_size);
+}
+
+inline
+bool posixx::linux::tipc::subscr::operator == (const subscr& other) const
+		throw ()
+{
+	return memcmp(this, &other, sizeof(*this)) == 0;
 }
 
 inline
