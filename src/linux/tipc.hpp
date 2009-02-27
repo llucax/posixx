@@ -168,9 +168,9 @@ enum reason_t
 enum subscr_t
 {
 	/**
-	 * Causes the topology service to generate a event::PUBLISHED event
+	 * Causes the topology service to generate a PUBLISHED event
 	 * for each port name or port name sequence it finds that overlaps
-	 * the specified port name sequence; a TIPC_WITHDRAWN event is issued
+	 * the specified port name sequence; a WITHDRAWN event is issued
 	 * each time a previously reported name becomes unavailable.
 	 *
 	 * Allows the topology service to inform the application if there
@@ -209,6 +209,17 @@ struct subscr: tipc_subscr
 			const char* usr_handle = "") throw ();
 };
 
+/// Type of events.
+enum event_t
+{
+	/// The port has been published.
+	PUBLISHED = TIPC_PUBLISHED,
+	/// The port has been withdrawn.
+	WITHDRAWN = TIPC_WITHDRAWN,
+	/// The event has timed out.
+	TIMEOUT = TIPC_SUBSCR_TIMEOUT
+};
+
 /**
  * Event message.
  *
@@ -216,16 +227,6 @@ struct subscr: tipc_subscr
  */
 struct event: tipc_event
 {
-	/// Type of events.
-	enum type_t
-	{
-		/// The port has been published.
-		PUBLISHED = TIPC_PUBLISHED,
-		/// The port has been withdrawn.
-		WITHDRAWN = TIPC_WITHDRAWN,
-		/// The event has timed out.
-		TIMEOUT = TIPC_SUBSCR_TIMEOUT
-	};
 };
 
 /**
