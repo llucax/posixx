@@ -649,7 +649,7 @@ inline
 posixx::linux::tipc::sockaddr::sockaddr(portid port, scope_t s) throw ()
 {
 	family = AF_TIPC;
-	addrtype = TIPC_ADDR_ID;
+	addrtype = ID;
 	scope = s;
 	addr.id = port;
 }
@@ -659,7 +659,7 @@ posixx::linux::tipc::sockaddr::sockaddr(name name, scope_t s, tipc::addr d)
 		throw ()
 {
 	family = AF_TIPC;
-	addrtype = TIPC_ADDR_NAME;
+	addrtype = NAME;
 	scope = s;
 	addr.name.name = name;
 	addr.name.domain = d;
@@ -669,7 +669,7 @@ inline
 posixx::linux::tipc::sockaddr::sockaddr(nameseq nameseq, scope_t s) throw ()
 {
 	family = AF_TIPC;
-	addrtype = TIPC_ADDR_NAMESEQ;
+	addrtype = NAMESEQ;
 	scope = s;
 	addr.nameseq = nameseq;
 }
