@@ -641,6 +641,8 @@ posixx::linux::tipc::subscr_event::subscription() const throw ()
 inline
 posixx::linux::tipc::sockaddr::sockaddr() throw ()
 {
+	memset(this, 0, sizeof(*this));
+	family = AF_TIPC;
 }
 
 inline
