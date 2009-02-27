@@ -223,10 +223,34 @@ struct subscr: tipc_subscr
 	 *                (or WAIT_FOREVER).
 	 * @param filter An event filter specifying which events are of
 	 *               interest to the application (see subscr_t).
-	 * @param usr_handle An 8 byte user handle that is application-defined.
+	 * @param usr_handle An 8 byte user handle that is application-defined,
+	 *                   (treated as a string).
 	 */
 	subscr(nameseq seq, __u32 timeout, __u32 filter,
 			const char* usr_handle = "") throw ();
+
+	/**
+	 * Constructor.
+	 *
+	 * @param seq The port name sequence of interest to the application.
+	 * @param timeout A subscription timeout value, in ms
+	 *                (or WAIT_FOREVER).
+	 * @param filter An event filter specifying which events are of
+	 *               interest to the application (see subscr_t).
+	 * @param usr_handle An 8 byte user handle that is application-defined.
+	 *                   (treated as binary data).
+	 * @param handle_size Size of the usr_handle buffer (it should be at
+	 *                    most 8)
+	 */
+	subscr(nameseq seq, __u32 timeout, __u32 filter,
+			const char* usr_handle, size_t handle_size)
+			throw ();
+
+	/// Set the user handle as a string.
+	void handle(const char* usr_handle) throw ();
+
+	/// Set the user handle as binary data.
+	void handle(const char* usr_handle, size_t handle_size) throw ();
 
 };
 
@@ -445,7 +469,30 @@ posixx::linux::tipc::subscr::subscr(nameseq s, __u32 t, __u32 f,
 	seq = s;
 	timeout = t;
 	filter = f;
-	std::memcpy(usr_handle, uh, sizeof(usr_handle));
+	handle(uh);
+}
+
+inline
+posixx::linux::tipc::subscr::subscr(nameseq s, __u32 t, __u32 f,
+		const char* uh, size_t uh_size) throw ()
+{
+	seq = s;
+	timeout = t;
+	filter = f;
+	handle(uh, uh_size);
+}
+
+inline
+void posixx::linux::tipc::subscr::handle(const char* uh) throw ()
+{
+	std::strncpy(usr_handle, uh, sizeof(usr_handle));
+}
+
+inline
+void posixx::linux::tipc::subscr::handle(const char* uh, size_t uh_size)
+		throw ()
+{
+	std::memcpy(usr_handle, uh, uh_size);
 }
 
 inline
