@@ -165,7 +165,7 @@ enum reason_t
  *
  * @see TIPC documentation: 1.4.3 Name Subscriptions
  */
-enum subcription_t
+enum subscr_t
 {
 	/**
 	 * Causes the topology service to generate a event::PUBLISHED event
@@ -193,7 +193,7 @@ enum subcription_t
  *
  * @see TIPC documentation: 1.4.3 Name Subscriptions
  */
-struct subscription: tipc_subscr
+struct subscr: tipc_subscr
 {
 	/**
 	 * Constructor.
@@ -202,10 +202,10 @@ struct subscription: tipc_subscr
 	 * @param timeout A subscription timeout value, in ms
 	 *                (or WAIT_FOREVER).
 	 * @param filter An event filter specifying which events are of
-	 *               interest to the application (see subscription_t).
+	 *               interest to the application (see subscr_t).
 	 * @param usr_handle An 8 byte user handle that is application-defined.
 	 */
-	subscription(nameseq seq, __u32 timeout, __u32 filter,
+	subscr(nameseq seq, __u32 timeout, __u32 filter,
 			const char* usr_handle = "") throw ();
 };
 
@@ -413,7 +413,7 @@ posixx::linux::tipc::nameseq::nameseq(__u32 t, __u32 instance) throw ()
 }
 
 inline
-posixx::linux::tipc::subscription::subscription(nameseq s, __u32 t, __u32 f,
+posixx::linux::tipc::subscr::subscr(nameseq s, __u32 t, __u32 f,
 		const char* uh) throw ()
 {
 	seq = s;
