@@ -105,6 +105,7 @@ struct portid: tipc_portid
  */
 struct name: tipc_name
 {
+
 	/**
 	 * Constructor.
 	 *
@@ -112,6 +113,7 @@ struct name: tipc_name
 	 * @param instance Instance of the named port.
 	 */
 	name(__u32 type, __u32 instance) throw ();
+
 };
 
 /**
@@ -121,6 +123,7 @@ struct name: tipc_name
  */
 struct nameseq: tipc_name_seq
 {
+
 	/**
 	 * Constructor.
 	 *
@@ -128,6 +131,7 @@ struct nameseq: tipc_name_seq
 	 * @param lower Lower bound.
 	 * @param upper Upper bound.
 	 */
+
 	nameseq(__u32 type, __u32 lower, __u32 upper) throw ();
 	/**
 	 * Constructor.
@@ -167,6 +171,7 @@ enum reason_t
  */
 enum subscr_t
 {
+
 	/**
 	 * Causes the topology service to generate a PUBLISHED event
 	 * for each port name or port name sequence it finds that overlaps
@@ -177,6 +182,7 @@ enum subscr_t
 	 * are @b any ports of interest.
 	 */
 	SUB_PORTS = TIPC_SUB_PORTS,
+
 	/**
 	 * Causes the topology service to generate a single publish event for
 	 * the first port it finds with an overlapping name and a single
@@ -186,6 +192,7 @@ enum subscr_t
 	 * @b all ports of interest.
 	 */
 	SUB_SERVICE = TIPC_SUB_SERVICE
+
 };
 
 /**
@@ -195,6 +202,7 @@ enum subscr_t
  */
 struct subscr: tipc_subscr
 {
+
 	/**
 	 * Constructor.
 	 *
@@ -207,17 +215,22 @@ struct subscr: tipc_subscr
 	 */
 	subscr(nameseq seq, __u32 timeout, __u32 filter,
 			const char* usr_handle = "") throw ();
+
 };
 
 /// Type of events.
 enum event_t
 {
+
 	/// The port has been published.
 	PUBLISHED = TIPC_PUBLISHED,
+
 	/// The port has been withdrawn.
 	WITHDRAWN = TIPC_WITHDRAWN,
+
 	/// The event has timed out.
 	TIMEOUT = TIPC_SUBSCR_TIMEOUT
+
 };
 
 /**
