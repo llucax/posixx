@@ -191,7 +191,19 @@ enum subscr_t
 	 * Allows the topology service to inform the application about
 	 * @b all ports of interest.
 	 */
-	SUB_SERVICE = TIPC_SUB_SERVICE
+	SUB_SERVICE = TIPC_SUB_SERVICE,
+
+	/**
+	 * Instruct the topology service to cancel a previously requested
+	 * subscription.
+	 *
+	 * The application simply resends the original subscription request
+	 * with SUB_CANCEL logically OR'd into the event filter.
+	 *
+	 * @note This is implemented in TIPC 1.7+ only (according to TIPC
+	 *       documentation).
+	 */
+	SUB_CANCEL = TIPC_SUB_CANCEL
 
 };
 
