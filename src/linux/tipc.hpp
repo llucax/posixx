@@ -225,7 +225,7 @@ enum event_t
  *
  * @see TIPC documentation: 1.4.3 Name Subscriptions
  */
-struct event: tipc_event
+struct subscr_event: tipc_event
 {
 };
 
