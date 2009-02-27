@@ -94,13 +94,13 @@ inline
 std::ostream& operator << (std::ostream& os,
 		const posixx::linux::tipc::sockaddr& sa) throw()
 {
-	using posixx::linux::tipc::sockaddr;
+	using namespace posixx::linux::tipc;
 	os << "sockaddr(" << sa.family << ", " << unsigned(sa.scope) << ", ";
-	if (sa.type() == sockaddr::ID)
+	if (sa.type() == ID)
 		os << sa.port_id();
-	else if (sa.type() == sockaddr::NAME)
+	else if (sa.type() == NAME)
 		os << sa.port_name() << ", " << sa.name_domain();
-	else if (sa.type() == sockaddr::NAMESEQ)
+	else if (sa.type() == NAMESEQ)
 		os << sa.name_seq();
 	else
 		os << "[UNKNOW addrtype=" << sa.addrtype << "]";

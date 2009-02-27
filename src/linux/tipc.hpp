@@ -315,6 +315,26 @@ struct subscr_event: tipc_event
 
 };
 
+/// Type of TIPC address
+enum type_t
+{
+	ID = TIPC_ADDR_ID,           ///< Port ID
+	NAME = TIPC_ADDR_NAME,       ///< Port name
+	NAMESEQ = TIPC_ADDR_NAMESEQ  ///< Name sequence or multicast
+};
+
+/**
+ * Bind scope.
+ *
+ * @see TIPC documentation: 2.1.2 bind
+ */
+enum scope_t
+{
+	ZONE = TIPC_ZONE_SCOPE,       ///< Zone scope.
+	CLUSTER = TIPC_CLUSTER_SCOPE, ///< Cluster scope.
+	NODE = TIPC_NODE_SCOPE        ///< Node scope.
+};
+
 /**
  * TIPC socket address (name).
  *
@@ -328,26 +348,6 @@ struct subscr_event: tipc_event
  */
 struct sockaddr: sockaddr_tipc
 {
-
-	/// Type of TIPC address
-	enum type_t
-	{
-		ID = TIPC_ADDR_ID, ///< Port ID
-		NAME = TIPC_ADDR_NAME, ///< Port name
-		NAMESEQ = TIPC_ADDR_NAMESEQ ///< Name sequence or multicast
-	};
-
-	/**
-	 * Bind scope.
-	 *
-	 * @see TIPC documentation: 2.1.2 bind
-	 */
-	enum scope_t
-	{
-		ZONE = TIPC_ZONE_SCOPE,       ///< Zone scope.
-		CLUSTER = TIPC_CLUSTER_SCOPE, ///< Cluster scope.
-		NODE = TIPC_NODE_SCOPE        ///< Node scope.
-	};
 
 	/// Constructor.
 	sockaddr() throw ();
@@ -675,7 +675,7 @@ posixx::linux::tipc::sockaddr::sockaddr(nameseq nameseq, scope_t s) throw ()
 }
 
 inline
-posixx::linux::tipc::sockaddr::type_t posixx::linux::tipc::sockaddr::type()
+posixx::linux::tipc::type_t posixx::linux::tipc::sockaddr::type()
 		const throw ()
 {
 	return static_cast< type_t >(addrtype);

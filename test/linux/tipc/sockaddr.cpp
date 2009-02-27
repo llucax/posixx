@@ -408,9 +408,9 @@ BOOST_AUTO_TEST_CASE( linux_tipc_sockaddr_id_ctor_test )
 	portid id(12313, addr(1, 1, 77));
 	tipc::sockaddr sp(id);
 	BOOST_CHECK_EQUAL( sp.family, AF_TIPC );
-	BOOST_CHECK_EQUAL( sp.addrtype, tipc::sockaddr::ID );
-	BOOST_CHECK_EQUAL( sp.type(), tipc::sockaddr::ID );
-	BOOST_CHECK_EQUAL( sp.scope, tipc::sockaddr::ZONE );
+	BOOST_CHECK_EQUAL( sp.addrtype, ID );
+	BOOST_CHECK_EQUAL( sp.type(), ID );
+	BOOST_CHECK_EQUAL( sp.scope, ZONE );
 	BOOST_CHECK_EQUAL( sp.port_id(), id );
 	BOOST_CHECK_EQUAL( sp.addr.id.ref, id.ref );
 	BOOST_CHECK_EQUAL( sp.addr.id.node, id.node );
@@ -420,11 +420,11 @@ BOOST_AUTO_TEST_CASE( linux_tipc_sockaddr_id_ctor_test )
 
 	BOOST_CHECK_EQUAL( sp, tipc::sockaddr(portid(12313, addr(2, 1, 77))) );
 
-	tipc::sockaddr sp2(id, tipc::sockaddr::NODE);
+	tipc::sockaddr sp2(id, NODE);
 	BOOST_CHECK_EQUAL( sp2.family, AF_TIPC );
-	BOOST_CHECK_EQUAL( sp2.addrtype, tipc::sockaddr::ID );
-	BOOST_CHECK_EQUAL( sp2.type(), tipc::sockaddr::ID );
-	BOOST_CHECK_EQUAL( sp2.scope, tipc::sockaddr::NODE );
+	BOOST_CHECK_EQUAL( sp2.addrtype, ID );
+	BOOST_CHECK_EQUAL( sp2.type(), ID );
+	BOOST_CHECK_EQUAL( sp2.scope, NODE );
 	BOOST_CHECK_EQUAL( sp2.port_id(), id );
 	BOOST_CHECK_EQUAL( sp2.addr.id.ref, id.ref );
 	BOOST_CHECK_EQUAL( sp2.addr.id.node, id.node );
@@ -437,9 +437,9 @@ BOOST_AUTO_TEST_CASE( linux_tipc_sockaddr_name_ctor_test )
 	name n(12313, 77);
 	tipc::sockaddr sn(n);
 	BOOST_CHECK_EQUAL( sn.family, AF_TIPC );
-	BOOST_CHECK_EQUAL( sn.addrtype, tipc::sockaddr::NAME );
-	BOOST_CHECK_EQUAL( sn.type(), tipc::sockaddr::NAME );
-	BOOST_CHECK_EQUAL( sn.scope, tipc::sockaddr::ZONE );
+	BOOST_CHECK_EQUAL( sn.addrtype, NAME );
+	BOOST_CHECK_EQUAL( sn.type(), NAME );
+	BOOST_CHECK_EQUAL( sn.scope, ZONE );
 	BOOST_CHECK_EQUAL( sn.port_name(), n );
 	BOOST_CHECK_EQUAL( sn.addr.name.name.type, n.type );
 	BOOST_CHECK_EQUAL( sn.addr.name.name.instance, n.instance );
@@ -452,8 +452,8 @@ BOOST_AUTO_TEST_CASE( linux_tipc_sockaddr_name_ctor_test )
 	sn.name_domain().node(999);
 	BOOST_CHECK_EQUAL( sn.name_domain(), addr(0, 0, 999) );
 
-	BOOST_CHECK_EQUAL( sn, tipc::sockaddr(name(999, 77),
-				tipc::sockaddr::ZONE, addr(0, 0, 999)) );
+	BOOST_CHECK_EQUAL( sn, tipc::sockaddr(name(999, 77), ZONE,
+				addr(0, 0, 999)) );
 
 }
 
@@ -463,9 +463,9 @@ BOOST_AUTO_TEST_CASE( linux_tipc_sockaddr_nameseq_ctor_test )
 	nameseq ns(12313, 77);
 	tipc::sockaddr sns(ns);
 	BOOST_CHECK_EQUAL( sns.family, AF_TIPC );
-	BOOST_CHECK_EQUAL( sns.addrtype, tipc::sockaddr::NAMESEQ );
-	BOOST_CHECK_EQUAL( sns.type(), tipc::sockaddr::NAMESEQ );
-	BOOST_CHECK_EQUAL( sns.scope, tipc::sockaddr::ZONE );
+	BOOST_CHECK_EQUAL( sns.addrtype, NAMESEQ );
+	BOOST_CHECK_EQUAL( sns.type(), NAMESEQ );
+	BOOST_CHECK_EQUAL( sns.scope, ZONE );
 	BOOST_CHECK_EQUAL( sns.name_seq(), ns );
 	BOOST_CHECK_EQUAL( sns.addr.nameseq.type, ns.type );
 	BOOST_CHECK_EQUAL( sns.addr.nameseq.lower, ns.lower );
