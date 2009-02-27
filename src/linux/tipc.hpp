@@ -96,6 +96,12 @@ struct portid: tipc_portid
 	 */
 	portid(__u32 ref, addr node) throw ();
 
+	/// Access to the node addr.
+	addr& node_addr() throw ();
+
+	/// Access to the node addr.
+	const addr& node_addr() const throw ();
+
 	/// Compares 2 port ids.
 	bool operator == (const portid& other) const throw ();
 
@@ -255,6 +261,12 @@ struct subscr: tipc_subscr
 			const char* usr_handle, size_t handle_size)
 			throw ();
 
+	/// Access to the subscribed name sequence.
+	nameseq& name_seq() throw ();
+
+	/// Access to the subscribed name sequence.
+	const nameseq& name_seq() const throw ();
+
 	/// Set the user handle as a string.
 	void handle(const char* usr_handle) throw ();
 
@@ -288,6 +300,19 @@ enum event_t
  */
 struct subscr_event: tipc_event
 {
+
+	/// Access to the subscribed name sequence.
+	portid& port_id() throw ();
+
+	/// Access to the subscribed name sequence.
+	const portid& port_id() const throw ();
+
+	/// Access to the subscribed name sequence.
+	subscr& subscription() throw ();
+
+	/// Access to the subscribed name sequence.
+	const subscr& subscription() const throw ();
+
 };
 
 /**
@@ -364,6 +389,30 @@ struct sockaddr: sockaddr_tipc
 
 	/// Compare two TIPC socket addresses
 	bool operator == (const sockaddr& other) const throw ();
+
+	/// Access to the port ID (only valid if addrtype == ID)
+	portid& port_id() throw ();
+
+	/// Access to the port ID (only valid if addrtype == ID)
+	const portid& port_id() const throw ();
+
+	/// Access to the port name (only valid if addrtype == NAME)
+	name& port_name() throw ();
+
+	/// Access to the port name (only valid if addrtype == NAME)
+	const name& port_name() const throw ();
+
+	/// Access to the port name domain (only valid if addrtype == NAME)
+	tipc::addr& name_domain() throw ();
+
+	/// Access to the port name domain (only valid if addrtype == NAME)
+	const tipc::addr& name_domain() const throw ();
+
+	/// Access to the port name sequence (only valid if addrtype == NAMESEQ)
+	nameseq& name_seq() throw ();
+
+	/// Access to the port name sequence (only valid if addrtype == NAMESEQ)
+	const nameseq& name_seq() const throw ();
 
 };
 
@@ -452,6 +501,19 @@ posixx::linux::tipc::portid::portid(__u32 r, addr n) throw ()
 }
 
 inline
+posixx::linux::tipc::addr& posixx::linux::tipc::portid::node_addr() throw ()
+{
+	return *reinterpret_cast<addr*>(&node);
+}
+
+inline
+const posixx::linux::tipc::addr& posixx::linux::tipc::portid::node_addr() const
+		throw ()
+{
+	return *reinterpret_cast<const addr*>(&node);
+}
+
+inline
 bool posixx::linux::tipc::portid::operator == (
 		const posixx::linux::tipc::portid& other) const throw ()
 {
@@ -516,6 +578,19 @@ posixx::linux::tipc::subscr::subscr(nameseq s, __u32 t, __u32 f,
 }
 
 inline
+posixx::linux::tipc::nameseq& posixx::linux::tipc::subscr::name_seq() throw ()
+{
+	return *reinterpret_cast<nameseq*>(&seq);
+}
+
+inline
+const posixx::linux::tipc::nameseq&
+posixx::linux::tipc::subscr::name_seq() const throw ()
+{
+	return *reinterpret_cast<const nameseq*>(&seq);
+}
+
+inline
 void posixx::linux::tipc::subscr::handle(const char* uh) throw ()
 {
 	std::strncpy(usr_handle, uh, sizeof(usr_handle));
@@ -533,6 +608,34 @@ bool posixx::linux::tipc::subscr::operator == (const subscr& other) const
 		throw ()
 {
 	return memcmp(this, &other, sizeof(*this)) == 0;
+}
+
+inline
+posixx::linux::tipc::portid& posixx::linux::tipc::subscr_event::port_id()
+		throw ()
+{
+	return *reinterpret_cast<portid*>(&port);
+}
+
+inline
+const posixx::linux::tipc::portid& posixx::linux::tipc::subscr_event::port_id()
+		const throw ()
+{
+	return *reinterpret_cast<const portid*>(&port);
+}
+
+inline
+posixx::linux::tipc::subscr& posixx::linux::tipc::subscr_event::subscription()
+		throw ()
+{
+	return *reinterpret_cast<subscr*>(&s);
+}
+
+inline
+const posixx::linux::tipc::subscr&
+posixx::linux::tipc::subscr_event::subscription() const throw ()
+{
+	return *reinterpret_cast<const subscr*>(&s);
 }
 
 inline
@@ -587,6 +690,60 @@ bool posixx::linux::tipc::sockaddr::operator == (const sockaddr& other) const
 		throw ()
 {
 	return !memcmp(this, &other, sizeof(*this));
+}
+
+inline
+posixx::linux::tipc::portid& posixx::linux::tipc::sockaddr::port_id() throw ()
+{
+	return *reinterpret_cast<portid*>(&addr.id);
+}
+
+inline
+const posixx::linux::tipc::portid& posixx::linux::tipc::sockaddr::port_id()
+		const throw ()
+{
+	return *reinterpret_cast<const portid*>(&addr.id);
+}
+
+inline
+posixx::linux::tipc::name& posixx::linux::tipc::sockaddr::port_name() throw ()
+{
+	return *reinterpret_cast<name*>(&addr.name.name);
+}
+
+inline
+const posixx::linux::tipc::name& posixx::linux::tipc::sockaddr::port_name()
+		const throw ()
+{
+	return *reinterpret_cast<const name*>(&addr.name.name);
+}
+
+inline
+posixx::linux::tipc::addr& posixx::linux::tipc::sockaddr::name_domain()
+		throw ()
+{
+	return *reinterpret_cast<tipc::addr*>(&addr.name.domain);
+}
+
+inline
+const posixx::linux::tipc::addr& posixx::linux::tipc::sockaddr::name_domain()
+		const throw ()
+{
+	return *reinterpret_cast<const tipc::addr*>(&addr.name.domain);
+}
+
+inline
+posixx::linux::tipc::nameseq& posixx::linux::tipc::sockaddr::name_seq()
+		throw ()
+{
+	return *reinterpret_cast<nameseq*>(&addr.nameseq);
+}
+
+inline
+const posixx::linux::tipc::nameseq& posixx::linux::tipc::sockaddr::name_seq()
+		const throw ()
+{
+	return *reinterpret_cast<const nameseq*>(&addr.nameseq);
 }
 
 #endif // POSIXX_LINUX_TIPC_HPP_
