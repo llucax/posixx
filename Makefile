@@ -10,20 +10,23 @@ default: all
 all:
 
 install:
-	$(MAKE) -C src $@
+	$(MAKE) -C src install
 
 doc:
-	$(MAKE) -C doc $@
+	$(MAKE) -C doc
 
-test memtest:
-	$(MAKE) -C test $@
+test:
+	$(MAKE) -C test test
+
+memtest:
+	$(MAKE) -C test memtest
 
 commit-check: doc test memtest
 
 clean:
-	$(MAKE) -C src $@
-	$(MAKE) -C doc $@
-	$(MAKE) -C test $@
+	$(MAKE) -C src clean
+	$(MAKE) -C doc clean
+	$(MAKE) -C test clean
 
 .PHONY: default all install doc test memtest commit-check clean
 
