@@ -1,8 +1,0 @@
-*.o
-.deps
-include
-test_suite
-test_suite.log
-valgrind.log
-valgrind.test_suite.log
-.*-stamp
