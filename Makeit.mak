@@ -30,6 +30,14 @@ COLOR_CMD ?= 00;33
 # See COLOR_CMD comment for details.
 COLOR_ARG ?=
 
+# ANSI color used for the warnings if $(COLOR) is non-empty
+# See COLOR_CMD comment for details.
+COLOR_WARN ?= 00;36
+
+# ANSI color used for commands output if $(COLOR) is non-empty
+# See COLOR_CMD comment for details.
+COLOR_OUT ?= 00;31
+
 # Flavor (variant), should be one of "dbg", "opt" or "cov"
 F ?= opt
 
@@ -163,11 +171,14 @@ abbr = $(if $(call eq,$(call abbr_helper,$1),$1),$1,$(addprefix \
 # pretty print.
 vexec_pc = $(if $1,\033[$1m%s\033[00m,%s)
 vexec_p = $(if $(COLOR), \
-	'   $(call vexec_pc,$(COLOR_CMD)) $(call vexec_pc,$(COLOR_ARG))\n', \
+	'   $(call vexec_pc,$(COLOR_CMD)) $(call vexec_pc,$(COLOR_ARG))\n$(if \
+			$(COLOR_OUT),\033[$(COLOR_OUT)m)', \
 	'   %s %s\n')
 vexec = $(if $V,printf $(vexec_p) \
 		'$(call abbr,$(if $3,$(strip $3),$(firstword $1)))' \
-		'$(call abbr,$(if $2,$(strip $2),$@))' ; )$1
+		'$(call abbr,$(if $2,$(strip $2),$@))' ; )$1 \
+		$(if $V,$(if $(COLOR),$(if $(COLOR_OUT), \
+				; r=$$? ; printf '\033[00m' ; exit $$r)))
 
 # Same as vexec but it silence the echo command (prepending a @ if $V).
 exec = $V$(call vexec,$1,$2,$3)
@@ -269,7 +280,8 @@ symlink_include_dir = $(shell \
 # have changed (optional).  This should be used as a rule action or something
 # where a shell script is expected.
 gen_rebuild_flags = $(shell if test x"$2" != x"`cat $1 2>/dev/null`"; then \
-		$(if $3,test -f $1 && echo "$3";) \
+		$(if $3,test -f $1 && echo "$(if $(COLOR),$(if $(COLOR_WARN),\
+			\033[$(COLOR_WARN)m$3\033[00m,$3),$3);";) \
 		echo "$2" > $1 ; fi)
 
 # Include sub-directory's Build.mak.  The only argument is a list of
@@ -474,7 +486,7 @@ setup_build_dir__ := $(shell \
 	mkdir -p $O $B $L $D $(INCLUDE_DIR) $(addprefix $O,$(patsubst $T%,%,\
 		$(shell find $T -type d $(foreach d,$(BUILD_DIR_EXCLUDE), \
 				-not -path '*/$d' -not -path '*/$d/*')))); \
-	test -L $(VD)/last || ln -s $F $(VD)/last )
+	rm -f $(VD)/last && ln -s $F $(VD)/last )
 
 
 # Automatic rebuilding when flags or commands changes
@@ -494,17 +506,17 @@ SPHINX.FLAGS := $(call varcat,SPHINX SPHINX_FORMAT SPHINX_PAPERSIZE)
 
 # Create files containing the current flags to trigger a rebuild if they change
 setup_flag_files__ := $(call gen_rebuild_flags,$G/compile-c-flags, \
-	$(COMPILE.c.FLAGS),C compiler or flags; )
+	$(COMPILE.c.FLAGS),C compiler)
 setup_flag_files__ := $(setup_flag_files__)$(call gen_rebuild_flags, \
-	$G/compile-cpp-flags, $(COMPILE.cpp.FLAGS),C++ compiler or flags; )
+	$G/compile-cpp-flags, $(COMPILE.cpp.FLAGS),C++ compiler)
 setup_flag_files__ := $(setup_flag_files__)$(call gen_rebuild_flags, \
-	$G/link-o-flags, $(LINK.o.FLAGS),linker or link flags; )
+	$G/link-o-flags, $(LINK.o.FLAGS),linker)
 setup_flag_files__ := $(setup_flag_files__)$(call gen_rebuild_flags, \
-	$G/sphinx-flags, $(SPHINX.FLAGS),sphinx command or flags; )
+	$G/sphinx-flags, $(SPHINX.FLAGS),sphinx)
 
 # Print any generated message (if verbose)
 $(if $V,$(if $(setup_flag_files__), \
-	$(info !! Something changed: $(setup_flag_files__)re-building \
+	$(info !! Flags or commands changed:$(setup_flag_files__) re-building \
 			affected files...)))
 
 endif
