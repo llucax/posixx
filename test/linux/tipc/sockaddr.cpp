@@ -2,6 +2,7 @@
 #include "common.hpp" // PTYPE, INST{1,2}, test_address{1,2}
 #include <posixx/linux/tipc.hpp> // posixx::linux::tipc
 #include <boost/test/unit_test.hpp> // unit testing stuff
+#include <stdint.h>
 
 using namespace ::posixx::linux::tipc;
 namespace tipc = ::posixx::linux::tipc;
