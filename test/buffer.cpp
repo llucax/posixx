@@ -40,7 +40,8 @@ BOOST_AUTO_TEST_CASE( types_test )
 	BOOST_CHECK_EQUAL(v, 2);
 	buffer::const_reference cr = v;
 	BOOST_CHECK_EQUAL(cr, 2);
-	buffer::iterator i;
+	buffer b;
+	buffer::iterator i = b.end();
 	buffer::const_iterator ci = i;
 	dummy(ci);
 	buffer::size_type s = 5;
